@@ -1,0 +1,282 @@
+@import "tailwindcss";
+
+/* ============================================================
+   LEVANTE STUDIO CO. — Design tokens
+   Editorial · Serif · Mediterranean · Timeless
+   ============================================================ */
+
+@theme {
+  /* — Palette ------------------------------------------------ */
+  --color-sand: #f5f1ea; /* primary background */
+  --color-linen: #e8ded2; /* secondary surface */
+  --color-clay: #d5c8b7; /* accent / hairline */
+  --color-ink: #2b2b2b; /* warm charcoal — type */
+  --color-ink-70: #2b2b2bb3;
+  --color-ink-50: #2b2b2b80;
+  --color-ink-30: #2b2b2b4d;
+  --color-ink-12: #2b2b2b1f;
+  --color-muted: #8b8474; /* warm taupe — italic accents, secondary */
+  --color-muted-soft: #a79f8e; /* lighter taupe — meta labels */
+
+  /* — Type families ----------------------------------------- */
+  --font-display: var(--font-fraunces), "Georgia", "Times New Roman", serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* — Editorial rhythm -------------------------------------- */
+  --spacing-gutter: clamp(1.25rem, 5vw, 6.5rem);
+  --measure: 62ch;
+
+  /* — Motion ------------------------------------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --dur-fast: 240ms;
+  --dur-base: 400ms;
+  --dur-slow: 600ms;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+
+* {
+  border-color: var(--color-clay);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto; /* Lenis owns scrolling */
+}
+
+body {
+  background: var(--color-sand);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.011em;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-sand);
+}
+
+@media (pointer: fine) {
+  .cursor-enabled,
+  .cursor-enabled * {
+    cursor: none;
+  }
+}
+
+/* ============================================================
+   Typographic scale — editorial serif, fluid
+   ============================================================ */
+
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Hero-scale display */
+.t-hero {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+  font-size: clamp(2.75rem, 8.5vw, 8.75rem);
+}
+
+/* Section display */
+.t-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.024em;
+  font-size: clamp(2.5rem, 6.5vw, 6.5rem);
+}
+
+/* Editorial statement (manifesto) */
+.t-statement {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  font-size: clamp(1.9rem, 4.6vw, 4.5rem);
+}
+
+/* Serif list / featured lines */
+.t-serif {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  font-size: clamp(1.5rem, 2.9vw, 2.5rem);
+}
+
+/* Italic editorial accent */
+.t-italic {
+  font-style: italic;
+}
+
+/* Overline / eyebrow / meta / index (sans, wide-tracked) */
+.t-eyebrow {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: clamp(0.6875rem, 0.9vw, 0.8125rem);
+  line-height: 1.2;
+}
+
+/* Lead paragraph */
+.t-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  letter-spacing: -0.014em;
+  line-height: 1.55;
+  font-size: clamp(1.125rem, 1.5vw, 1.4rem);
+}
+
+/* Body */
+.t-body {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 1.15vw, 1.125rem);
+  line-height: 1.65;
+  letter-spacing: -0.01em;
+}
+
+/* ============================================================
+   Reveal primitives
+   ============================================================ */
+
+.reveal-mask {
+  overflow: hidden;
+  display: block;
+  /* Give descenders (e.g. italic g/j/q) room so the mask doesn't clip them */
+  padding-bottom: 0.22em;
+  margin-bottom: -0.22em;
+}
+
+.reveal-line {
+  display: block;
+  transform: translateY(110%);
+  transition: transform var(--dur-slow) var(--ease-out-expo);
+  will-change: transform;
+}
+
+[data-inview="true"] .reveal-line {
+  transform: translateY(0);
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: var(--color-ink-12);
+}
+
+/* ============================================================
+   Accessibility
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-line {
+    transform: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Component chrome
+   ============================================================ */
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 200;
+  transform: translateY(-150%);
+  background: var(--color-ink);
+  color: var(--color-sand);
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  transition: transform var(--dur-fast) var(--ease-out-expo);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-offset: 2px;
+}
+
+/* Nav underline draw */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.35em;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-base) var(--ease-out-expo);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Custom cursor hover state */
+.cursor-ring.is-hover {
+  width: 3.75rem;
+  height: 3.75rem;
+  opacity: 0.55;
+}
+
+/* Hero scroll cue */
+.scroll-cue {
+  transform-origin: top;
+  animation: scroll-cue 2.4s var(--ease-in-out-quart) infinite;
+}
+@keyframes scroll-cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  40% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  60% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
